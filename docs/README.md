@@ -14,11 +14,11 @@ The goal is to apply GitOps principles (single source of truth in Git, reproduci
 ⸻
 
 ## 📦 Architecture
-	•	NUC 12 i7 with Linux (rootless Podman).
-	•	Repositories:
+•	NUC 12 i7 with Linux (rootless Podman).
+•	Repositories:
 	•	guilliman_expenses: Go backend app + workflows publishing container images to GHCR.
 	•	homelab-gitops: this repo, which describes how apps and base services are deployed.
-	•	GitOps loop on the NUC:
+•	GitOps loop on the NUC:
 	1.	git pull from this repo.
 	2.	Decrypt secrets with SOPS + age.
 	3.	podman-compose pull && up -d per stack.
@@ -45,16 +45,16 @@ The goal is to apply GitOps principles (single source of truth in Git, reproduci
   ```sops -d secrets/guilliman.secret.env```
 
 ## 🚀 Deployment flow
-	1.	Build & publish
-Each app repo (e.g. guilliman_expenses) builds container images and pushes them to GHCR.
-	2.	New image detection
-	•	Diun runs on the NUC and monitors registries.
-	•	When a new image appears, it triggers a hook that applies the image policy.
-	3.	Image Policy (mini-Flux)
-	•	Policies in policies/*.yml define which images are allowed (e.g. semver >=1.2.0, architecture amd64, cosign signature required).
-	•	If the image passes the policy, the script updates this repo (stacks/.../compose.yml), commits as a bot, and pushes to main.
-	4.	GitOps loop
-	•	The NUC runs git pull, decrypts secrets, and redeploys stacks with podman-compose.
+1.	Build & publish
+	Each app repo (e.g. guilliman_expenses) builds container images and pushes them to GHCR.
+2.	New image detection
+•	Diun runs on the NUC and monitors registries.
+•	When a new image appears, it triggers a hook that applies the image policy.
+3.	Image Policy (mini-Flux)
+•	Policies in policies/*.yml define which images are allowed (e.g. semver >=1.2.0, architecture amd64, cosign signature required).
+•	If the image passes the policy, the script updates this repo (stacks/.../compose.yml), commits as a bot, and pushes to main.
+4.	GitOps loop
+•	The NUC runs git pull, decrypts secrets, and redeploys stacks with podman-compose.
 
 ⸻
 
