@@ -2,16 +2,15 @@ version: "3.9"
 
 services:
   guilliman:
-    image: ghcr.io/tuorg/guilliman:v1.2.3  
+    image: ghcr.io/jpvargasdev/guilliman_expenses:0.0.1
     container_name: guilliman
     env_file:
-      - ../../configs/guilliman.env       
-      - ../../secrets/guilliman.secret.env 
+      - ../../configs/guilliman.env
+      - ../../secrets/guilliman.secret.env
     networks:
       - backend
       - edge
-    depends_on:
-      - postgres
+  
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
       interval: 30s
@@ -19,46 +18,22 @@ services:
       retries: 3
       start_period: 20s
     restart: unless-stopped
-    labels:                                
+    labels:
+      labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.guilliman.rule=Host(`guilliman.tudominio.com`)"
+      - "traefik.http.routers.guilliman.rule=Host(`guilliman.192.168.1.50.sslip.io`)"
       - "traefik.http.routers.guilliman.entrypoints=websecure"
       - "traefik.http.routers.guilliman.tls.certresolver=le"
       - "traefik.http.services.guilliman.loadbalancer.server.port=8080"
+   
     logging:
       driver: "json-file"
       options:
         max-size: "5m"
         max-file: "3"
 
-  postgres:
-    image: postgres:18
-    container_name: guilliman-postgres
-    env_file:
-      - ../../configs/postgres.env
-      - ../../secrets/postgres.secret.env
-    volumes:
-        - /data/postgres:/var/lib/postgresql/data
-    networks:
-      - backend
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB} -h localhost"]
-      interval: 30s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
-    restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "2m"
-        max-file: "3"
-
 networks:
   backend:
-    driver: bridge
+    external: true       
   edge:
-    external: true
-
-volumes:
-  pg_guilliman_data:
+    external: true       
