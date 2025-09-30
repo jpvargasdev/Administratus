@@ -1,0 +1,45 @@
+# --- Archivos de sistema / editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# --- Logs ---
+*.log
+
+# --- Dumps y backups ---
+*.sql
+*.dump
+*.bak
+*.tar
+*.gz
+*.zip
+/data/
+backups/
+
+# --- Archivos de contenedores ---
+.docker/
+.podman/
+
+# --- Archivos de entorno ---
+# Ignora todos los .env
+*.env
+# ... excepto los que declaraste en configs/ (no sensibles)
+!configs/*.env
+# ... y los cifrados con SOPS en secrets/
+!secrets/*.secret.env
+
+# --- Claves y certificados ---
+*.pem
+*.key
+*.crt
+id_rsa*
+id_ed25519*
+known_hosts
+
+# --- Archivos temporales ---
+tmp/
+.cache/
