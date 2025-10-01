@@ -1,8 +1,16 @@
-## Homelab GitOps
+# 🏛️ Administratus
 
-This repository contains the declarative infrastructure for a homelab.
+“Records are eternal. Obedience is eternal. Only drift is heresy.” – Common edict of the Administratum
 
-Homelab Specs:
+
+# 📜 About
+
+Administratus is the central archive of truth for a homelab GitOps system. It contains the manifests, configuration, and decrees that define the desired state of your machines.
+
+From this vault, Magos_Dominus reads and enforces the sacred instructions, reconciling the written word with the material world. Here, infrastructure is not managed but commanded—every commit a mandate, every file a law.
+
+
+## Homelab Specs:
 
 - Nuc 12 Extreme i7
 - SSD 2TB
@@ -11,7 +19,6 @@ Homelab Specs:
 
 The goal is to apply GitOps principles (single source of truth in Git, reproducible deployments, secrets managed with SOPS) without Kubernetes or heavy tooling, using Podman Compose and a lightweight loop running on a home server.
 
-⸻
 
 ## 📦 Architecture
 •	NUC 12 i7 with Linux (rootless Podman).
@@ -23,7 +30,7 @@ The goal is to apply GitOps principles (single source of truth in Git, reproduci
 	2.	Decrypt secrets with SOPS + age.
 	3.	podman-compose pull && up -d per stack.
 
-⸻
+
 
 ## 📂 Repository layout
 
@@ -56,7 +63,7 @@ The goal is to apply GitOps principles (single source of truth in Git, reproduci
 4.	GitOps loop
 •	The NUC runs git pull, decrypts secrets, and redeploys stacks with podman-compose.
 
-⸻
+
 
 ## 🛠️ Current stacks
 	•	guilliman: Go backend for expense analysis.
@@ -66,7 +73,7 @@ The goal is to apply GitOps principles (single source of truth in Git, reproduci
 
 Planned: immich (photo management), n8n (automation).
 
-⸻
+
 
 ## 🔒 Security
 	•	Secrets encrypted in Git with SOPS.
@@ -75,7 +82,7 @@ Planned: immich (photo management), n8n (automation).
 	•	Images pinned by digest in production.
 	•	Bot commits signed with its own identity.
 
-⸻
+
 
 ## 📜 License
 
