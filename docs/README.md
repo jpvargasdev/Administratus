@@ -23,7 +23,7 @@ The goal is to apply GitOps principles (single source of truth in Git, reproduci
 ## 📦 Architecture
 •	NUC 12 i7 with Linux (rootless Podman).
 •	Repositories:
-	•	guilliman_expenses: Go backend app + workflows publishing container images to GHCR.
+	•	lexcodex: Go backend app + workflows publishing container images to GHCR.
 	•	homelab-gitops: this repo, which describes how apps and base services are deployed.
 •	GitOps loop on the NUC:
 	1.	git pull from this repo.
@@ -40,20 +40,20 @@ The goal is to apply GitOps principles (single source of truth in Git, reproduci
   proxy/          # Traefik and reverse proxy
   secrets/        # *.secret.env encrypted with SOPS
   sops.yaml       # SOPS configuration (rules and keys)
-  stacks/         # one stack per service (guilliman, postgres, diun, etc.)
+  stacks/         # one stack per service (lexcodex, postgres, diun, etc.)
 
 ## 🔑 Secrets management
 	•	Secrets (*.secret.env) are encrypted with SOPS and age.
 	•	To edit a secret:
 
-  ```sops secrets/guilliman.secret.env```
+  ```sops secrets/lexcodex.secret.env```
 
 	•	To decrypt manually:
-  ```sops -d secrets/guilliman.secret.env```
+  ```sops -d secrets/lexcodex.secret.env```
 
 ## 🚀 Deployment flow
 1.	Build & publish
-	Each app repo (e.g. guilliman_expenses) builds container images and pushes them to GHCR.
+	Each app repo (e.g. lexcodex) builds container images and pushes them to GHCR.
 2.	New image detection
 •	Diun runs on the NUC and monitors registries.
 •	When a new image appears, it triggers a hook that applies the image policy.
@@ -66,7 +66,7 @@ The goal is to apply GitOps principles (single source of truth in Git, reproduci
 
 
 ## 🛠️ Current stacks
-	•	guilliman: Go backend for expense analysis.
+	•	lexcodex: Go backend for expense analysis.
 	•	postgres: shared PostgreSQL database (v18).
 	•	proxy (traefik): single HTTP/HTTPS entrypoint.
 	•	diun: image update notifier + GitOps trigger.

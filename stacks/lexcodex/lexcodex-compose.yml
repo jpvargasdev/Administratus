@@ -1,12 +1,12 @@
 version: "3.9"
 
 services:
-  guilliman:
-    image: ghcr.io/jpvargasdev/guilliman_expenses:0.0.1
-    container_name: guilliman
+  lexcodex:
+    image: ghcr.io/jpvargasdev/lexcodex:0.0.2 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex" }}
+    container_name: lexcodex 
     env_file:
-      - ../../configs/guilliman.env
-      - ../../secrets/guilliman.secret.env
+      - ../../configs/lexcodex.env
+      - ../../secrets/lexcodex.secret.env
     networks:
       - backend
       - edge
@@ -21,10 +21,10 @@ services:
     labels:
       labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.guilliman.rule=Host(`guilliman.192.168.1.50.sslip.io`)"
-      - "traefik.http.routers.guilliman.entrypoints=websecure"
-      - "traefik.http.routers.guilliman.tls.certresolver=le"
-      - "traefik.http.services.guilliman.loadbalancer.server.port=8080"
+      - "traefik.http.routers.lexcodex.rule=Host(`lexcodex.192.168.1.50.sslip.io`)"
+      - "traefik.http.routers.lexcodex.entrypoints=websecure"
+      - "traefik.http.routers.lexcodex.tls.certresolver=le"
+      - "traefik.http.services.lexcodex.loadbalancer.server.port=8080"
    
     logging:
       driver: "json-file"
