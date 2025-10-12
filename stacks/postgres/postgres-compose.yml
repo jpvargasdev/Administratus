@@ -1,12 +1,10 @@
-version: "3.9"
-
 services:
   pg-main:
     image: postgres:18 # {"magos": {"policy": "manual"}}
     container_name: pg-main
     env_file:
       - ../../configs/postgres.env          
-      - ../../secrets/postgres.secret.env   
+      - ../../secrets/.runtime/postgres.env   
     volumes:
       - /data/postgres:/var/lib/postgresql/data
     networks:

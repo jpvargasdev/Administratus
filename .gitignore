@@ -23,6 +23,7 @@ backups/
 *.env
 !configs/*.env
 !secrets/*.secret.env
+secrets/.runtime
 
 *.pem
 *.key

@@ -1,9 +1,10 @@
-version: "3.9"
-
 services:
   traefik:
     image: traefik:v3.2 # {"magos": {"policy": "manual"}}
     container_name: traefik
+    env_file:
+      - ../../configs/traefik.env
+      - ../../secrets/.runtime/traefik.env
     command:
       - --api.dashboard=true
       - --providers.docker=true
