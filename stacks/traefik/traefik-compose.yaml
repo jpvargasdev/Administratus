@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  traefik:
+    image: traefik:v3.2
+    container_name: traefik
+    command:
+      - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      # Uncomment if you want HTTPS later:
+      # - --entrypoints.websecure.address=:443
+      # - --certificatesresolvers.le.acme.tlschallenge=true
+      # - --certificatesresolvers.le.acme.email=you@example.com
+      # - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+    ports:
+      - "80:80"
+      - "8080:8080"  # dashboard
+      # - "443:443"  # uncomment if you enable HTTPS
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # - traefik_le:/letsencrypt  # if you enable HTTPS
+    networks:
+      - proxy
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  proxy:
+    name: proxy
+    external: true
+
+#volumes:
+#  traefik_le:
