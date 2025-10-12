@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   lexcodex:
-    image: ghcr.io/jpvargasdev/lexcodex:0.0.3 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
+    image: ghcr.io/jpvargasdev/lexcodex@sha256:a170884515bb94cf4bdea8568ad5339d8ca98e01313d20839f5e06e96cb5be7a # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
     container_name: lexcodex 
     env_file:
       - ../../configs/lexcodex.env
