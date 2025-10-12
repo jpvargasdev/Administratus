@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   traefik:
-    image: traefik:v3.2
+    image: traefik:v3.2 # {"magos": {"policy": "manual"}}
     container_name: traefik
     command:
       - --api.dashboard=true
