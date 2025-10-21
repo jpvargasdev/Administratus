@@ -16,13 +16,13 @@ services:
       retries: 3
       start_period: 20s
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.lexcodex.rule=Host(`lexcodex.192.168.1.50.sslip.io`)"
-      - "traefik.http.routers.lexcodex.entrypoints=websecure"
-      - "traefik.http.routers.lexcodex.tls.certresolver=le"
-      - "traefik.http.services.lexcodex.loadbalancer.server.port=8080"
-   
+   #  labels:
+   #    - "traefik.enable=true"
+   #    - "traefik.http.routers.lexcodex.rule=Host(`lexcodex.192.168.1.50.sslip.io`)"
+   #    - "traefik.http.routers.lexcodex.entrypoints=websecure"
+   #    - "traefik.http.routers.lexcodex.tls.certresolver=le"
+   #    - "traefik.http.services.lexcodex.loadbalancer.server.port=8080"
+   # 
     logging:
       driver: "json-file"
       options:
