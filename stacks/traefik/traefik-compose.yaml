@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: traefik:v3.2 # {"magos": {"policy": "manual"}}
+    image: traefik:v3.2 
     container_name: traefik
     env_file:
       - ../../configs/traefik.env

@@ -1,36 +1,26 @@
 services:
   lexcodex:
     image: ghcr.io/jpvargasdev/lexcodex:0.0.5 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
-    container_name: lexcodex 
+    container_name: lexcodex
     env_file:
       - ../../configs/lexcodex.env
       - ../../secrets/.runtime/lexcodex.env
-    networks:
-      - backend
-      - edge
-  
+
+    # rootless pasta networking
+    network_mode: "pasta"
+    ports:
+      - "8080:8080"   # host:container via pasta
+
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 20s
+
     restart: unless-stopped
-   #  labels:
-   #    - "traefik.enable=true"
-   #    - "traefik.http.routers.lexcodex.rule=Host(`lexcodex.192.168.1.50.sslip.io`)"
-   #    - "traefik.http.routers.lexcodex.entrypoints=websecure"
-   #    - "traefik.http.routers.lexcodex.tls.certresolver=le"
-   #    - "traefik.http.services.lexcodex.loadbalancer.server.port=8080"
-   # 
     logging:
       driver: "json-file"
       options:
         max-size: "5m"
         max-file: "3"
-
-networks:
-  backend:
-    external: true       
-  edge:
-    external: true       

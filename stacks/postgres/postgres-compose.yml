@@ -1,6 +1,6 @@
 services:
   pg-main:
-    image: postgres:18 # {"magos": {"policy": "manual"}}
+    image: postgres:18
     container_name: pg-main
     env_file:
       - ../../configs/postgres.env          
