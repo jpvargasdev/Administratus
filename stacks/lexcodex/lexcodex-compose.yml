@@ -1,13 +1,13 @@
 services:
   lexcodex:
-    image: ghcr.io/jpvargasdev/lexcodex:0.0.5
+    image: ghcr.io/jpvargasdev/lexcodex:0.0.5 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
     container_name: lexcodex
     env_file:
       - ../../configs/lexcodex.env
       - ../../secrets/.runtime/lexcodex.env
 
     network_mode: "pasta"
-    ports: []    # no exposed ports
+    ports: []
 
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
