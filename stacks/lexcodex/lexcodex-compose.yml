@@ -1,13 +1,13 @@
 services:
   lexcodex:
     image: ghcr.io/jpvargasdev/lexcodex:0.0.5 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
-    network_mode: "pasta"
-    ports:
-      - "8080:8080"
     container_name: lexcodex 
     env_file:
       - ../../configs/lexcodex.env
       - ../../secrets/.runtime/lexcodex.env
+    networks:
+      - backend
+      - edge
   
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
@@ -29,3 +29,8 @@ services:
         max-size: "5m"
         max-file: "3"
 
+networks:
+  backend:
+    external: true       
+  edge:
+    external: true       
