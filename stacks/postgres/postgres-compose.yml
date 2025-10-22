@@ -1,14 +1,15 @@
 services:
   pg-main:
     image: postgres:18 # {"magos": {"policy": "manual"}}
+    network_mode: "pasta"
+    ports:
+      - "5432:5432"
     container_name: pg-main
     env_file:
       - ../../configs/postgres.env          
       - ../../secrets/.runtime/postgres.env   
     volumes:
       - pgdata:/var/lib/postgresql/data
-    networks:
-      - backend
     healthcheck:
       healthcheck:
       test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\" -h localhost || exit 1"]
@@ -21,6 +22,4 @@ services:
       driver: "json-file"
       options: { max-size: "10m", max-file: "3" }
 
-networks:
-  backend:
-    external: true
+
