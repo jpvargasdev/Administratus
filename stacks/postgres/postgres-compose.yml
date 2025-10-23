@@ -1,26 +1,19 @@
 services:
-  pg-main:
+  pg:
     image: postgres:18 # {"magos": {"policy": "manual"}}
-    container_name: pg-main
     env_file:
-      - ../../configs/postgres.env          
-      - ../../secrets/.runtime/postgres.env   
+      - ../../configs/postgres.env
+      - ../../secrets/.runtime/postgres.env
     volumes:
       - pgdata:/var/lib/postgresql/data
-    networks:
-      - backend
+    ports:
+      - "5432:5432"
     healthcheck:
-      healthcheck:
       test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\" -h localhost || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 20s
     restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options: { max-size: "10m", max-file: "3" }
-
-networks:
-  backend:
-    external: true
+volumes:
+  pgdata:
