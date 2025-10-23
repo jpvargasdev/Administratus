@@ -7,8 +7,6 @@ services:
       - ../../secrets/.runtime/lexcodex.env
 
     network_mode: "pasta"
-    ports:
-      - "8080:8080"
 
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
