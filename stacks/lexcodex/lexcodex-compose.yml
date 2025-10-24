@@ -13,7 +13,7 @@ services:
       timeout: 3s
       retries: 20
       start_period: 10s
-    restart: unless-stopped
+    restart: on-failure:1 
 
   lexcodex:
     image: ghcr.io/jpvargasdev/lexcodex:0.0.5 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
@@ -30,7 +30,7 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
-    restart: on-failure:5
+    restart: on-failure:1
 
 volumes:
   pgdata: {}
