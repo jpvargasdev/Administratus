@@ -1,6 +1,6 @@
 services:
-  pg:
-    image: postgres:18 # {"magos": {"policy": "manual"}}
+  pg-main:
+    image: docker.io/library/postgres:18 # {"magos": {"policy": "manual"}}
     env_file:
       - ../../configs/postgres.env
       - ../../secrets/.runtime/postgres.env
