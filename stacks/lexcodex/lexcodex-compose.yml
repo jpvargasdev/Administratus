@@ -1,6 +1,7 @@
 services:
   pg-main:
     image: docker.io/library/postgres:17
+    container_name: pg-main
     env_file:
       - ../../configs/postgres.env
       - ../../secrets/.runtime/postgres.env
@@ -11,23 +12,25 @@ services:
       interval: 5s
       timeout: 3s
       retries: 20
-      start_period: 60s
+      start_period: 10s
     restart: unless-stopped
 
   lexcodex:
     image: ghcr.io/jpvargasdev/lexcodex:0.0.5 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
+    container_name: lexcodex
     env_file:
       - ../../configs/lexcodex.env
       - ../../secrets/.runtime/lexcodex.env
-    environment:
-      DB_HOST: pg-main
-      DB_PORT: "5432"
     depends_on:
       pg-main:
         condition: service_healthy
-    ports:
-      - "8080:8080"
-    restart: "no"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: on-failure:5
 
 volumes:
-  pgdata:
+  pgdata: {}
