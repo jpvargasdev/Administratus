@@ -1,7 +1,6 @@
 services:
   lexcodex:
-    image: ghcr.io/jpvargasdev/lexcodex:0.0.5
-    # container_name: lexcodex   # ← remove to avoid collisions
+    image: ghcr.io/jpvargasdev/lexcodex:0.0.5 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
     env_file:
       - ../../configs/lexcodex.env
       - ../../secrets/.runtime/lexcodex.env
