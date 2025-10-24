@@ -1,6 +1,6 @@
 services:
   pg:
-    image: postgres:18
+    image: postgres:18 # {"magos": {"policy": "manual"}}
     env_file:
       - ../../configs/postgres.env
       - ../../secrets/.runtime/postgres.env
@@ -12,7 +12,7 @@ services:
       timeout: 5s
       retries: 10
       start_period: 60s
-    restart: unless-stopped
+    restart: "no" 
 
 volumes:
   pgdata:
