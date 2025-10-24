@@ -1,25 +1,19 @@
 services:
   lexcodex:
-    image: ghcr.io/jpvargasdev/lexcodex:0.0.5 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
-    container_name: lexcodex
+    image: ghcr.io/jpvargasdev/lexcodex:0.0.5
+    # container_name: lexcodex   # ← remove to avoid collisions
     env_file:
       - ../../configs/lexcodex.env
       - ../../secrets/.runtime/lexcodex.env
 
-    network_mode: "slirp4netns"
-    environment:
-      # podman exposes host as this name for slirp
-      DB_HOST: host.containers.internal
-      DB_PORT: "5432"
+    ports:
+      - "8080:8080"
+
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
       interval: 30s
       timeout: 5s
-      retries: 3
-      start_period: 20s
+      retries: 5
+      start_period: 60s
+
     restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "5m"
-        max-file: "3"
