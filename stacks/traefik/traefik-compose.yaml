@@ -4,17 +4,18 @@ services:
     container_name: traefik
     restart: unless-stopped
     command:
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.endpoint=unix:///run/podman/podman.sock"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
+      - --api.dashboard=true
+      - --api.insecure=true
+      - --entrypoints.web.address=:80
+      - --providers.docker=true
+      - --providers.docker.endpoint=unix:///run/podman/podman.sock
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=singularity
     ports:
       - "80:80"
-      - "443:443"
       - "8081:8080"
     volumes:
-      - /run/podman/podman.sock:/var/run/docker.sock:ro
+      - /run/podman/podman.sock:/run/podman/podman.sock:ro
     networks:
       - singularity
 
