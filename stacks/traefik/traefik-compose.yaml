@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: traefik:v3.0 # { "magos": { "policy": "manual"}}
+    image: traefik:v3.0 # {"magos": {"policy": "manual"}}
     container_name: traefik
     restart: unless-stopped
     command:
