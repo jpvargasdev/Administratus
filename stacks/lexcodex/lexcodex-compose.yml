@@ -7,6 +7,7 @@ services:
       - ../../secrets/.runtime/postgres.env
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ../../init-scripts:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\" -h localhost || exit 1"]
       interval: 5s
