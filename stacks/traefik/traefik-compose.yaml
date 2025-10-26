@@ -10,7 +10,7 @@ services:
       - --providers.docker=true
       - --providers.docker.endpoint=unix:///run/podman/podman.sock
       - --providers.docker.exposedbydefault=false
-      - --providers.docker.network=singularity
+      # - --providers.docker.network=singularity
     ports:
       - "80:80"
       - "8081:8080"
