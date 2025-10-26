@@ -1,40 +1,22 @@
 services:
   traefik:
-    image: traefik:v3.2 
+    image: traefik:v3.0 # { "magos": { "policy": "manual"}}
     container_name: traefik
-    env_file:
-      - ../../configs/traefik.env
-      - ../../secrets/.runtime/traefik.env
+    restart: unless-stopped
     command:
-      - --api.dashboard=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      # Uncomment if you want HTTPS later:
-      # - --entrypoints.websecure.address=:443
-      # - --certificatesresolvers.le.acme.tlschallenge=true
-      # - --certificatesresolvers.le.acme.email=you@example.com
-      # - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.endpoint=unix:///run/podman/podman.sock"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
     ports:
       - "80:80"
-      - "8080:8080"  # dashboard
-      # - "443:443"  # uncomment if you enable HTTPS
+      - "443:443"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      # - traefik_le:/letsencrypt  # if you enable HTTPS
+      - /run/podman/podman.sock:/var/run/docker.sock:ro
     networks:
-      - proxy
-    restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+      - singularity
 
 networks:
-  proxy:
-    name: proxy
+  singularity:
     external: true
-
-#volumes:
-#  traefik_le:

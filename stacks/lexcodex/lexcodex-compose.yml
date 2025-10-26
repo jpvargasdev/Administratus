@@ -2,6 +2,8 @@ services:
   pg-main:
     image: docker.io/library/postgres:17
     container_name: pg-main
+    networks:
+      - singularity
     env_file:
       - ../../configs/postgres.env
       - ../../secrets/.runtime/postgres.env
@@ -18,10 +20,12 @@ services:
     restart: on-failure:1 
 
   lexcodex:
-    image: ghcr.io/jpvargasdev/lexcodex:0.0.7 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/lexcodex"}}
+    image: ghcr.io/jpvargasdev/lexcodex:0.0.7
     container_name: lexcodex
     ports:
       - "8080:8080"
+    networks:
+      - singularity
     env_file:
       - ../../configs/lexcodex.env
       - ../../secrets/.runtime/lexcodex.env
@@ -39,3 +43,7 @@ services:
 
 volumes:
   pgdata: {}
+
+networks:
+  singularity:
+    external: true
