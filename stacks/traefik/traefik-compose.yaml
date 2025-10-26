@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     command:
       - --api.dashboard=true
-      - --api.insecure=true
+      # - --api.insecure=true
       - --entrypoints.web.address=:80
       - --providers.docker=true
       - --providers.docker.endpoint=unix:///run/podman/podman.sock
