@@ -10,6 +10,7 @@ services:
       - --providers.docker=true
       - --providers.docker.endpoint=unix:///run/podman/podman.sock
       - --providers.docker.exposedbydefault=false
+      - --log.level=INFO
     ports:
       - "80:80"
       - "8081:8080"
