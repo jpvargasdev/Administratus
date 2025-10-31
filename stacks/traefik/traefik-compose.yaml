@@ -3,6 +3,11 @@ services:
     image: docker.io/traefik:v3.0 # {"magos": {"policy": "manual"}}
     container_name: traefik
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+    max-file: "3"
     command:
       - --api.dashboard=true
       - --api.insecure=true
@@ -11,6 +16,9 @@ services:
       - --providers.docker.endpoint=unix:///run/podman/podman.sock
       - --providers.docker.exposedbydefault=false
       - --log.level=INFO
+      - --accesslog=true
+      - --accesslog.fields.defaultmode=keep
+      - --accesslog.bufferingsize=100    
     ports:
       - "80:80"
       - "8081:8080"
