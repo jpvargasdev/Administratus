@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: docker.io/traefik:v3.0 # {"magos": {"policy": "manual"}}
+    image: docker.io/traefik:v3.5 # {"magos": {"policy": "manual"}}
     container_name: traefik
     restart: unless-stopped
     logging:
