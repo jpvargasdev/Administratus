@@ -47,7 +47,8 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.lexcodex.rule=Host(`lexcodex.home`)
-      - traefik.http.routers.lexcodex.entrypoints=web
+      - traefik.http.routers.lexcodex.entrypoints=websecure
+      - traefik.http.routers.lexcodex.tls=true
       - traefik.http.services.lexcodex.loadbalancer.server.port=8080
     networks:
       - singularity
