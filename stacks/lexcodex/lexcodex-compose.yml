@@ -46,7 +46,7 @@ services:
         max-file: "3"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.lexcodex.rule=Host(`lex.local`)
+      - traefik.http.routers.lexcodex.rule=Host(`lexcodex.home`)
       - traefik.http.routers.lexcodex.entrypoints=web
       - traefik.http.services.lexcodex.loadbalancer.server.port=8080
     networks:
