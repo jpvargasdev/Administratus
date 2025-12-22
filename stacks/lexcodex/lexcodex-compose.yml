@@ -50,7 +50,7 @@ services:
       - "traefik.http.routers.lexcodex.rule=Host(`lexcodex.rootplane.dev`)"
       - "traefik.http.routers.lexcodex.entrypoints=websecure"
       - "traefik.http.routers.lexcodex.tls=true"
-      - "traefik.http.routers.lexcodex.certresolver=cloudflare"
+      - "traefik.http.routers.lexcodex.tls.certresolver=cloudflare"
       - "traefik.http.services.lexcodex.loadbalancer.server.port=8080"
     networks:
       - singularity
