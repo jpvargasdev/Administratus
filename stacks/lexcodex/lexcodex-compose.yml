@@ -46,9 +46,11 @@ services:
         max-file: "3"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.lexcodex.rule=Host(`lexcodex.home`)
+      - traefik.http.routers.lexcodex.rule=Host(`lexcodex.rootplane.dev`)
       - traefik.http.routers.lexcodex.entrypoints=websecure
       - traefik.http.routers.lexcodex.tls=true
+      - traefik.http.routers.lexcodex.certresolver=cloudflare
+      - traefik.http.routers.lexcodex.tls.domains[0].main=lexcodex.rootplane.dev
       - traefik.http.services.lexcodex.loadbalancer.server.port=8080
     networks:
       - singularity

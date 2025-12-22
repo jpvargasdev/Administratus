@@ -1,8 +1,10 @@
 services:
   traefik:
-    image: docker.io/traefik:v3.5 # {"magos": {"policy": "manual"}}
+    image: docker.io/traefik:v3.6 # {"magos": {"policy": "manual"}}
     container_name: traefik
     restart: unless-stopped
+    env_file:
+      - ../../secrets/.runtime/traefik.env
     logging:
       driver: "json-file"
       options:
@@ -13,22 +15,31 @@ services:
       - --api.insecure=true
       - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
+      
+      # force HTTPS
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+
       - --providers.docker=true
       - --providers.docker.endpoint=unix:///run/podman/podman.sock
       - --providers.docker.exposedbydefault=false
-      - --providers.file.directory=/certs
-      - --providers.file.watch=true
+
+      # --- Certificates ---
+      - --certificatesresolvers.cloudflare.acme.dnschallenge=true
+      - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.cloudflare.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.cloudflare.acme.storage=/letsencrypt/acme.json
+      # -------------------------------------
+
       - --log.level=INFO
       - --accesslog=true
-      - --accesslog.fields.defaultmode=keep
-      - --accesslog.bufferingsize=100    
     ports:
       - "80:80"
       - "443:443"
       - "8081:8080"
     volumes:
-      - /home/jpvm/certs:/certs:ro
       - /run/podman/podman.sock:/run/podman/podman.sock:ro
+      - ./letsencrypt:/letsencrypt
     networks:
       - singularity
 
