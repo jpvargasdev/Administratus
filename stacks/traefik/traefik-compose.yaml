@@ -26,8 +26,8 @@ services:
 
       # --- Certificates ---
       - --certificatesresolvers.cloudflare.acme.dnschallenge=true
-      - --certificatesresolvers.cloudflare.acme.dnsChallenge.propagation.delayBeforeChecks=300
-      - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53
+      - --certificatesresolvers.cloudflare.acme.dnsChallenge.propagation.delayBeforeChecks=360
+      - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
       - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
       - --certificatesresolvers.cloudflare.acme.email=${ACME_EMAIL}
       - --certificatesresolvers.cloudflare.acme.storage=/letsencrypt/acme.json
