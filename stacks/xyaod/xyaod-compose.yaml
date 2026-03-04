@@ -1,0 +1,35 @@
+services:
+  xyaod:
+    image: ghcr.io/jpvargasdev/xyaod:0.0.1 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/xyaod"}}
+    container_name: xyaod 
+    env_file:
+      - ../../configs/xyaod.env
+    depends_on:
+      pg-main:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
+      interval: 2m
+      timeout: 3s
+      retries: 2
+      start_period: 30s
+    restart: on-failure:1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      # - "traefik.enable=true"
+      # - "traefik.docker.network=singularity" 
+      # - "traefik.http.routers.lexcodex.rule=Host(`lexcodex.rootplane.dev`)"
+      # - "traefik.http.routers.lexcodex.entrypoints=websecure"
+      # - "traefik.http.routers.lexcodex.tls=true"
+      # - "traefik.http.routers.lexcodex.tls.certresolver=cloudflare"
+      # - "traefik.http.services.lexcodex.loadbalancer.server.port=8080"
+    networks:
+      - singularity
+
+networks:
+  singularity:
+    external: true
