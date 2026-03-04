@@ -1,31 +1,43 @@
 services:
-  xyaod:
+  machinespirittimetable:
     image: ghcr.io/jpvargasdev/machinespirittimetable:0.0.2 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/machinespirittimetable"}}
-    container_name: xyaod 
+    container_name: machinespirittimetable
+    privileged: true
+
+    networks:
+      - singularity
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+    environment:
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/var/run/dbus/system_bus_socket"
     env_file:
-      - ../../configs/xyaod.env
+      - ../../configs/machinespirittimetable.env
+
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health || exit 1"]
       interval: 2m
       timeout: 3s
       retries: 2
       start_period: 30s
+
     restart: on-failure:1
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+
     labels:
-      # - "traefik.enable=true"
-      # - "traefik.docker.network=singularity" 
-      # - "traefik.http.routers.lexcodex.rule=Host(`lexcodex.rootplane.dev`)"
-      # - "traefik.http.routers.lexcodex.entrypoints=websecure"
-      # - "traefik.http.routers.lexcodex.tls=true"
-      # - "traefik.http.routers.lexcodex.tls.certresolver=cloudflare"
-      # - "traefik.http.services.lexcodex.loadbalancer.server.port=8080"
-    networks:
-      - singularity
+      - "traefik.enable=true"
+      - "traefik.docker.network=singularity"
+      - "traefik.http.services.machinespirittimetable.loadbalancer.server.port=8080"
+      # - "traefik.http.routers.machinespirittimetable.rule=Host(`machinespirittimetable.tu-dominio.se`)"
+      # - "traefik.http.routers.machinespirittimetable.entrypoints=websecure"
+      # - "traefik.http.routers.machinespirittimetable.tls=true"
 
 networks:
   singularity:
