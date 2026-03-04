@@ -31,7 +31,7 @@ services:
         max-size: "10m"
         max-file: "3"
 
-    command: ["machinespirittimetable", "site", "-f", "medium"]
+    command: ["xyaod", "site", "-f", "medium"]
 
     labels:
       - "traefik.enable=true"
