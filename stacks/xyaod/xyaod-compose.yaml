@@ -31,7 +31,7 @@ services:
         max-size: "10m"
         max-file: "3"
 
-    command: ["xyaod", "site", "-f", "medium"]
+    command: ["site", "-f", "medium"]
 
     labels:
       - "traefik.enable=true"
