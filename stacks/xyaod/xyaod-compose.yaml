@@ -1,6 +1,6 @@
 services:
   xyaod:
-    image: ghcr.io/jpvargasdev/xyaod:0.0.1 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/xyaod"}}
+    image: ghcr.io/jpvargasdev/led_display_xyao:0.0.1 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/led_display_xyao"}}
     container_name: xyaod 
     env_file:
       - ../../configs/xyaod.env
