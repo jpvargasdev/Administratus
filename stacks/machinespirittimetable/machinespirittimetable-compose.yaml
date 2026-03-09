@@ -1,6 +1,6 @@
 services:
   machinespirittimetable:
-    image: ghcr.io/jpvargasdev/machinespirittimetable:0.0.4 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/machinespirittimetable"}}
+    image: ghcr.io/jpvargasdev/machinespirittimetable:0.0.5 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/machinespirittimetable"}}
     container_name: machinespirittimetable
     privileged: true
 
