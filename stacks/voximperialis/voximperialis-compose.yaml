@@ -37,6 +37,7 @@ services:
     image: ghcr.io/jpvargasdev/voximperialis:v0.0.1 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/voximperialis"}}
     pull_policy: always
     env_file:
+      - ../../configs/voximperialis.env
       - ../../secrets/.runtime/voximperialis.env
     depends_on:
       prosody:
