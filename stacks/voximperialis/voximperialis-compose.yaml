@@ -10,7 +10,7 @@ services:
         max-size: "10m"
         max-file: "3m"
     volumes:
-      - ./data/prosody:/var/lib/prosody
+      - /data/prosody:/var/lib/prosody
     environment:
       PROSODY_VIRTUAL_HOSTS: vox.rootplane.dev
     healthcheck:
