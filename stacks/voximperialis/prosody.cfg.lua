@@ -31,6 +31,9 @@ authentication = "internal_hashed"
 storage = "internal"
 data_path = "/var/lib/prosody"
 
+-- PID file (required for prosodyctl status)
+pidfile = "/var/run/prosody/prosody.pid"
+
 -- Logging
 log = {
     info = "*console";
