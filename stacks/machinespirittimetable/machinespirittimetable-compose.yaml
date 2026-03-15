@@ -37,10 +37,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=singularity"
+      - "traefik.http.routers.machinespirittimetable.rule=Host(`machinespirittimetable.rootplane.dev`)"
+      - "traefik.http.routers.machinespirittimetable.entrypoints=websecure"
+      - "traefik.http.routers.machinespirittimetable.tls=true"
+      - "traefik.http.routers.machinespirittimetable.tls.certresolver=cloudflare"
       - "traefik.http.services.machinespirittimetable.loadbalancer.server.port=8080"
-      # - "traefik.http.routers.machinespirittimetable.rule=Host(`machinespirittimetable.tu-dominio.se`)"
-      # - "traefik.http.routers.machinespirittimetable.entrypoints=websecure"
-      # - "traefik.http.routers.machinespirittimetable.tls=true"
 
 networks:
   singularity:
