@@ -1,0 +1,46 @@
+
+services:
+  prosody:
+    image: prosodyim/prosody:13.0
+    pull_policy: always
+    restart: on-failure:1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3m"
+    volumes:
+      - ./data/prosody:/var/lib/prosody
+    environment:
+      PROSODY_VIRTUAL_HOSTS: vox.rootplane.dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=singularity"
+      # C2S (client-to-server)
+      - "traefik.tcp.routers.prosody-c2s.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.prosody-c2s.entrypoints=xmpp-c2s"
+      - "traefik.tcp.services.prosody-c2s.loadbalancer.server.port=5222"
+      # S2S (server-to-server)
+      - "traefik.tcp.routers.prosody-s2s.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.prosody-s2s.entrypoints=xmpp-s2s"
+      - "traefik.tcp.services.prosody-s2s.loadbalancer.server.port=5269"
+    networks:
+      - singularity
+
+  voximperialis:
+    image: ghcr.io/jpvargasdev/voximperialis:v0.0.1
+    pull_policy: always
+    env_file:
+      - ../../secrets/.runtime/voximperialis.env
+    restart: on-failure:1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3m"
+    networks:
+      - singularity
+
+networks:
+  singularity:
+    external: true
