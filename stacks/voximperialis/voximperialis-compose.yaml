@@ -11,6 +11,7 @@ services:
         max-file: "3m"
     volumes:
       - /data/prosody:/var/lib/prosody
+      - ./prosody.cfg.lua:/etc/prosody/prosody.cfg.lua:ro
     environment:
       PROSODY_VIRTUAL_HOSTS: vox.rootplane.dev
     healthcheck:
