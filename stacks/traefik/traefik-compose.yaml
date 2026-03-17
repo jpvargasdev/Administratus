@@ -34,7 +34,6 @@ services:
 
       # --- XMPP TCP entrypoints ---
       - --entrypoints.xmpp-c2s.address=:5222
-      - --entrypoints.xmpp-c2s-tls.address=:5223
       - --entrypoints.xmpp-s2s.address=:5269
 
       - --log.level=INFO
@@ -44,7 +43,6 @@ services:
       - "443:443"
       - "8081:8080"
       - "5222:5222"
-      - "5223:5223"
       - "5269:5269"
     volumes:
       - /run/podman/podman.sock:/run/podman/podman.sock:ro

@@ -23,25 +23,12 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=singularity"
-      # HTTP router (dummy) - triggers Let's Encrypt cert for vox.rootplane.dev
-      - "traefik.http.routers.prosody-cert.rule=Host(`vox.rootplane.dev`)"
-      - "traefik.http.routers.prosody-cert.entrypoints=websecure"
-      - "traefik.http.routers.prosody-cert.tls=true"
-      - "traefik.http.routers.prosody-cert.tls.certresolver=cloudflare"
-      - "traefik.http.services.prosody-cert.loadbalancer.server.port=5222"
-      # C2S (client-to-server) - plain TCP passthrough
+      # C2S (client-to-server) - plain TCP passthrough, Prosody handles STARTTLS
       - "traefik.tcp.routers.prosody-c2s.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.prosody-c2s.entrypoints=xmpp-c2s"
       - "traefik.tcp.routers.prosody-c2s.tls=false"
       - "traefik.tcp.routers.prosody-c2s.service=prosody-c2s"
       - "traefik.tcp.services.prosody-c2s.loadbalancer.server.port=5222"
-      # C2S Direct TLS (port 5223) - Traefik terminates TLS with Let's Encrypt
-      - "traefik.tcp.routers.prosody-c2s-tls.rule=HostSNI(`vox.rootplane.dev`)"
-      - "traefik.tcp.routers.prosody-c2s-tls.entrypoints=xmpp-c2s-tls"
-      - "traefik.tcp.routers.prosody-c2s-tls.tls=true"
-      - "traefik.tcp.routers.prosody-c2s-tls.tls.certresolver=cloudflare"
-      - "traefik.tcp.routers.prosody-c2s-tls.tls.domains[0].main=vox.rootplane.dev"
-      - "traefik.tcp.routers.prosody-c2s-tls.service=prosody-c2s"
       # S2S (server-to-server)
       - "traefik.tcp.routers.prosody-s2s.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.prosody-s2s.entrypoints=xmpp-s2s"

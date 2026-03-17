@@ -9,7 +9,7 @@ interfaces = { "*" }
 modules_enabled = {
     "roster";
     "saslauth";
-    -- "tls";  -- TLS terminated at Traefik
+    "tls";
     "dialback";
     "disco";
     "posix";
@@ -19,7 +19,8 @@ modules_enabled = {
     "cron";
 }
 
--- Allow plaintext connections (internal Docker network)
+-- TLS: Prosody handles STARTTLS with self-signed cert
+-- Generate cert: prosodyctl cert generate vox.rootplane.dev
 c2s_require_encryption = false
 s2s_require_encryption = false
 allow_unencrypted_plain_auth = true
@@ -38,9 +39,6 @@ pidfile = "/var/run/prosody/prosody.pid"
 log = {
     info = "*console";
 }
-
--- TLS is terminated at Traefik (port 5223 Direct TLS)
--- Prosody receives plain TCP from Traefik and internal clients
 
 -- Virtual host
 VirtualHost "vox.rootplane.dev"
