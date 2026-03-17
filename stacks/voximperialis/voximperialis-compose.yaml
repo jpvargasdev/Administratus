@@ -26,10 +26,14 @@ services:
       # C2S (client-to-server)
       - "traefik.tcp.routers.prosody-c2s.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.prosody-c2s.entrypoints=xmpp-c2s"
+      - "traefik.tcp.routers.prosody-c2s.tls=false"
+      - "traefik.tcp.routers.prosody-c2s.service=prosody-c2s"
       - "traefik.tcp.services.prosody-c2s.loadbalancer.server.port=5222"
       # S2S (server-to-server)
       - "traefik.tcp.routers.prosody-s2s.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.prosody-s2s.entrypoints=xmpp-s2s"
+      - "traefik.tcp.routers.prosody-s2s.tls=false"
+      - "traefik.tcp.routers.prosody-s2s.service=prosody-s2s"
       - "traefik.tcp.services.prosody-s2s.loadbalancer.server.port=5269"
     networks:
       - singularity
