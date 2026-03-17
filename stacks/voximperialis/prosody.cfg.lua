@@ -9,7 +9,7 @@ interfaces = { "*" }
 modules_enabled = {
     "roster";
     "saslauth";
-    "tls";
+    -- "tls";
     "dialback";
     "disco";
     "posix";
