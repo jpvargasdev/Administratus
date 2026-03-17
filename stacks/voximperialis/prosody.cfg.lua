@@ -9,7 +9,7 @@ interfaces = { "*" }
 modules_enabled = {
     "roster";
     "saslauth";
-    "tls";
+    -- "tls";  -- TLS terminated at Traefik
     "dialback";
     "disco";
     "posix";
@@ -38,6 +38,9 @@ pidfile = "/var/run/prosody/prosody.pid"
 log = {
     info = "*console";
 }
+
+-- TLS is terminated at Traefik (port 5223 Direct TLS)
+-- Prosody receives plain TCP from Traefik and internal clients
 
 -- Virtual host
 VirtualHost "vox.rootplane.dev"
