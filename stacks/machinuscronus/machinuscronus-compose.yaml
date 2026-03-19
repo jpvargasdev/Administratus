@@ -1,0 +1,32 @@
+services:
+  machinuscronus:
+    image: ghcr.io/jpvargasdev/machinuscronus:0.0.1 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/machinuscronus"}}
+    container_name: machinuscronus
+    pull_policy: always
+    env_file:
+      - ../../configs/machinuscronus.env
+      - ../../secrets/.runtime/machinuscronus.env
+    volumes:
+      - /data/machinuscronus:/data/machinuscronus
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/health || exit 1"]
+      interval: 2m
+      timeout: 3s
+      retries: 2
+      start_period: 10s
+    restart: on-failure:1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=singularity"
+      - "traefik.http.services.machinuscronus.loadbalancer.server.port=8081"
+    networks:
+      - singularity
+
+networks:
+  singularity:
+    external: true
