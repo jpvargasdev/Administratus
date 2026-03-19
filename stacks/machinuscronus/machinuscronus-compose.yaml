@@ -8,6 +8,7 @@ services:
       - ../../secrets/.runtime/machinuscronus.env
     volumes:
       - /data/machinuscronus:/data/machinuscronus
+      - /opt/machinuscronus/secrets:/opt/machinuscronus/secrets:ro
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8081/health || exit 1"]
       interval: 2m
