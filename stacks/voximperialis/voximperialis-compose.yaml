@@ -39,7 +39,7 @@ services:
       - singularity
 
   voximperialis:
-    image: ghcr.io/jpvargasdev/voximperialis:0.0.6 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/voximperialis"}}
+    image: ghcr.io/jpvargasdev/voximperialis:0.0.7 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/voximperialis"}}
     pull_policy: always
     env_file:
       - ../../configs/voximperialis.env
