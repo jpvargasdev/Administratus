@@ -1,6 +1,6 @@
 services:
   machinuscronus:
-    image: ghcr.io/jpvargasdev/machinuscronus:0.0.3 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/machinuscronus"}}
+    image: ghcr.io/jpvargasdev/machinuscronus:0.0.4 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/machinuscronus"}}
     container_name: machinuscronus
     pull_policy: always
     env_file:
