@@ -28,7 +28,7 @@ services:
       - singularity
 
   ollama-init:
-    image: docker.io/ollama/ollama:latest
+    image: docker.io/ollama/ollama:latest # {"magos": {"policy": "manual"}}   
     container_name: ollama-init
     depends_on:
       ollama:
