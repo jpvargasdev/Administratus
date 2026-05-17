@@ -1,0 +1,49 @@
+services:
+  ollama:
+    image: docker.io/ollama/ollama:latest
+    container_name: ollama
+    pull_policy: always
+    volumes:
+      - /data/ollama:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=5m
+      - OLLAMA_NUM_PARALLEL=1
+    devices:
+      - nvidia.com/gpu=all
+    security_opt:
+      - label=disable
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:11434/api/tags || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 15s
+    restart: on-failure:1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - singularity
+
+  ollama-init:
+    image: docker.io/ollama/ollama:latest
+    container_name: ollama-init
+    depends_on:
+      ollama:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      ollama pull qwen2.5-coder:7b &&
+      ollama pull qwen2-vl
+      "
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    restart: "no"
+    networks:
+      - singularity
+
+networks:
+  singularity:
+    external: true
