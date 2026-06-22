@@ -36,7 +36,8 @@ services:
     entrypoint: >
       /bin/sh -c "
       ollama pull qwen2.5-coder:7b &&
-      ollama pull qwen2.5vl:7b
+      ollama pull qwen2.5vl:7b &&
+      ollama pull mxbai-embed-large
       "
     environment:
       - OLLAMA_HOST=http://ollama:11434
