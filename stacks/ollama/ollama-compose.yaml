@@ -27,7 +27,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=singularity"
-      - "traefik.http.routers.ollama.rule=Host(`ollama.rootplane.dev`)"
+      - "traefik.http.routers.ollama.rule=Host(`vox.rootplane.dev`)"
       - "traefik.http.routers.ollama.entrypoints=websecure"
       - "traefik.http.routers.ollama.tls=true"
       - "traefik.http.routers.ollama.tls.certresolver=cloudflare"
