@@ -24,6 +24,14 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=singularity"
+      - "traefik.http.routers.ollama.rule=Host(`ollama.rootplane.dev`)"
+      - "traefik.http.routers.ollama.entrypoints=websecure"
+      - "traefik.http.routers.ollama.tls=true"
+      - "traefik.http.routers.ollama.tls.certresolver=cloudflare"
+      - "traefik.http.services.ollama.loadbalancer.server.port=11434"
     networks:
       - singularity
 
@@ -36,8 +44,7 @@ services:
     entrypoint: >
       /bin/sh -c "
       ollama pull qwen2.5-coder:7b &&
-      ollama pull qwen2.5vl:7b &&
-      ollama pull mxbai-embed-large
+      ollama pull qwen2.5vl:7b
       "
     environment:
       - OLLAMA_HOST=http://ollama:11434
