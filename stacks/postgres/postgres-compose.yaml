@@ -1,0 +1,28 @@
+services:
+  pg-main:
+    image: docker.io/library/postgres:17
+    container_name: pg-main
+    ports:
+      - "127.0.0.1:5432:5432"
+    env_file:
+      - ../../configs/postgres.env
+      - ../../secrets/.runtime/postgres.env
+    volumes:
+      - /data/postgres/pg-main:/var/lib/postgresql/data
+      - ../../init-scripts:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\" -h localhost || exit 1"]
+      interval: 2m
+      retries: 2
+    restart: on-failure:1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - singularity
+
+networks:
+  singularity:
+    external: true

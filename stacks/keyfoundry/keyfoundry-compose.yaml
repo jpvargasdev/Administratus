@@ -1,0 +1,35 @@
+services:
+  keyfoundry:
+    image: ghcr.io/jpvargasdev/deck-fpv:0.0.1 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/deck-fpv"}}
+    container_name: keyfoundry
+    env_file:
+      - ../../configs/keyfoundry.env
+      - ../../secrets/.runtime/keyfoundry.env
+    volumes:
+      - /data/keyfoundry/license-key:/secrets/license-key:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8091/ || exit 1"]
+      interval: 2m
+      timeout: 3s
+      retries: 2
+      start_period: 30s
+    restart: on-failure:1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=singularity" 
+      - "traefik.http.routers.keyfoundry.rule=Host(`keyfoundry.rootplane.dev`)"
+      - "traefik.http.routers.keyfoundry.entrypoints=websecure"
+      - "traefik.http.routers.keyfoundry.tls=true"
+      - "traefik.http.routers.keyfoundry.tls.certresolver=cloudflare"
+      - "traefik.http.services.keyfoundry.loadbalancer.server.port=8091"
+    networks:
+      - singularity
+
+networks:
+  singularity:
+    external: true
