@@ -1,6 +1,6 @@
 services:
   pg-main:
-    image: docker.io/library/postgres:17
+    image: docker.io/library/postgres:17 # {"magos": {"policy": "manual"}}
     container_name: pg-main
     ports:
       - "127.0.0.1:5432:5432"
