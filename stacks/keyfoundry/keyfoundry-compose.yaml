@@ -22,7 +22,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=singularity" 
-      - "traefik.http.routers.keyfoundry.rule=Host(`keyfoundry.rootplane.dev`)"
+      - "traefik.http.routers.keyfoundry.rule=Host(`lexcodex.rootplane.dev`)"
       - "traefik.http.routers.keyfoundry.entrypoints=websecure"
       - "traefik.http.routers.keyfoundry.tls=true"
       - "traefik.http.routers.keyfoundry.tls.certresolver=cloudflare"
