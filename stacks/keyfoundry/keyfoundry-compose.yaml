@@ -1,6 +1,6 @@
 services:
   keyfoundry:
-    image: ghcr.io/jpvargasdev/deck-fpv:0.0.2 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/deck-fpv"}}
+    image: ghcr.io/jpvargasdev/deck-fpv:0.0.3 # {"magos": {"policy": "semver", "repo": "ghcr.io/jpvargasdev/deck-fpv"}}
     container_name: keyfoundry
     env_file:
       - ../../configs/keyfoundry.env
